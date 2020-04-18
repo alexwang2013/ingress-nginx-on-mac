@@ -1,0 +1,37 @@
+= demo for ingress-nginx on mac
+
+== get the source
+```sh
+git clone https://github.com/alexwang2013/ingress-nginx-on-mac.git
+```
+
+== build docker image
+
+```sh
+cd ingress-nginx-on-mac
+mvn clean compile package
+docker build -t alexwang2020/alex .
+docker push alexwang2020/alex
+```
+
+== deploy app and ingress-nginx
+```sh
+kubectl apply -f k8s-resource
+```
+
+== access the web app through ingress
+```sh
+curl localhost/hello
+```
+
+wait for some minites, then you would get a hello message
+```sh
+Hello
+```
+== remove all the deploys
+```sh
+kubectl delete -f k8s-resource
+```
+== reference
+
+* https://github.com/kubernetes/ingress-nginx/[ingress-nginx]
