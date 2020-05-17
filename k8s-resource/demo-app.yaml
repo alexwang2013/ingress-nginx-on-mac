@@ -34,7 +34,7 @@ metadata:
     app: demo
     version: v1
 spec:
-  replicas: 3
+  replicas: 2
   template:
     metadata:
       labels:
@@ -45,8 +45,12 @@ spec:
       - name: webserver
         image: alexwang2020/alex
         resources:
+          limits:
+            cpu: "500m"
+            memory: "1000Mi"
           requests:
             cpu: "100m"
+            memory: "500Mi"
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -87,34 +91,3 @@ spec:
           value: "v2"
         - name: METADATA
           value: "staging"
-
----
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: demo-v3
-  labels:
-    app: demo
-    version: v3
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: demo
-        version: v3
-    spec:
-      containers:
-      - name: webserver
-        image: alexwang2020/alex
-        resources:
-          requests:
-            cpu: "100m"
-        imagePullPolicy: IfNotPresent #Always
-        ports:
-        - containerPort: 8080
-        env:
-        - name: VERSION
-          value: "v3"
-        - name: METADATA
-          value: "dev"
