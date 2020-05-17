@@ -32,6 +32,29 @@ Hello
 ```sh
 kubectl delete -f k8s-resource
 ```
+
+
+== others
+
+=== deploy metrics-server
+```sh
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.6/components.yaml
+```
+
+if you faced the problem about x509
+then add the following args, then restart the pods you want to monitor
+```sh
+          - --kubelet-insecure-tls
+          - --kubelet-preferred-address-types=InternalIP
+```
+
+=== deploy k8s dashboard
+```sh
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+```
+
+remember, if you want to use metrics-server, you need deploy metrics-server before deploy dashboard. or the dashboard-metrics-scraper may failed to get metrics from metircs-server 
+
 == reference
 
 * https://github.com/kubernetes/ingress-nginx/[ingress-nginx]
